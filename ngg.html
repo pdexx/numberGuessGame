@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Number Guess Game</title>
+  <style>
+    .wrap {
+      width: 100px;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <input type="button" value="I want to play a game~ 輸入5487可強制結束遊戲" onclick="myGame.myFunc()">
+  </div>
+  <script>
+    var myGame = { //用物件包覆函式,避免汙染全域變數
+      time: 0, //用於紀錄猜的次數
+      end: 1, //設定遊戲的開始結束
+      myFunc: function () {
+        do {
+          var number = Number(prompt()); //輸入值為字串,要改為數字
+          var numCheck = /[0-9]/; //正規表達式, 先賦予變數, 優化效果(空格可輸入 修正中)
+          if (!!numCheck.test(number)) { //!!將比對結果轉換為布林
+            this.time += 1; //輸入後紀錄猜了一次
+            var ans = 999; //預設的答案
+            if (number === 5487) {
+              alert('遊戲強制結束');
+              this.end = 0; //強制結束
+            } else if (number > ans) {
+              alert('太大, 您共猜了' + this.time + '次'); //太大
+            } else if (number === ans) {
+              alert('猜對了!, 您共猜了' + this.time + '次'); //猜對並清空次數
+              this.time = 0; //清空次數
+              this.end = 0; //遊戲結束
+            } else if (number < ans) {
+              alert('太小, 您共猜了' + this.time + '次'); //太小
+            } else {
+              alert('bug請通知工程師' + this.time + '次'); //太小
+            }
+          } else {
+            alert('請輸入整數數字');
+          }
+        } while (!!this.end); //將遊戲值轉為布林來繼續或結束遊戲
+      }
+    };
+  </script>
+</body>
+
+</html>
